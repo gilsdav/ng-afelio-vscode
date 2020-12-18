@@ -1,6 +1,6 @@
 # NG Afelio
 
-This is the README for your extension "ng-afelio". After writing up a brief description, we recommend including the following sections.
+This is the VS Code extension of `ng-afelio` CLI.
 
 ## Features
 
@@ -13,8 +13,6 @@ For example if there is an image subfolder under your extension project workspac
 > Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
 
 ## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
 
 This extension can only be use on projet that contains `ng-afelio`.
 If it's not the case, use `ng add ng-afelio`. 
@@ -32,7 +30,7 @@ This extension contributes the following settings:
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+No known issues
 
 ## Release Notes
 
@@ -52,7 +50,7 @@ Added features X, Y, and Z. -->
 
 -----------------------------------------------------------------------------------------------------------
 
-## Working with Markdown
+<!-- ## Working with Markdown
 
 **Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
 
@@ -61,7 +59,7 @@ Added features X, Y, and Z. -->
 * Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
 
 ### For more information
-<!-- 
+
 * [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
 * [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/) -->
 
