@@ -1,4 +1,4 @@
-# ng-afelio README
+# NG Afelio
 
 This is the README for your extension "ng-afelio". After writing up a brief description, we recommend including the following sections.
 
@@ -15,6 +15,9 @@ For example if there is an image subfolder under your extension project workspac
 ## Requirements
 
 If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+
+This extension can only be use on projet that contains `ng-afelio`.
+If it's not the case, use `ng add ng-afelio`. 
 
 ## Extension Settings
 
@@ -35,7 +38,7 @@ Calling out known issues can help limit users opening duplicate issues against y
 
 Users appreciate release notes as you update your extension.
 
-### 1.0.0
+<!-- ### 1.0.0
 
 Initial release of ...
 
@@ -45,7 +48,7 @@ Fixed issue #.
 
 ### 1.1.0
 
-Added features X, Y, and Z.
+Added features X, Y, and Z. -->
 
 -----------------------------------------------------------------------------------------------------------
 
@@ -58,8 +61,8 @@ Added features X, Y, and Z.
 * Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
 
 ### For more information
-
+<!-- 
 * [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/) -->
 
 **Enjoy!**
