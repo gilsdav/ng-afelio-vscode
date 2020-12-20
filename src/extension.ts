@@ -72,7 +72,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const options: vscode.QuickPickItem[] = [ // 'barrel', 'spec', 'example'
 			{ label: 'barrel', description: "Add into Barrel" },
 			{ label: 'spec', description: "Create spec file" },
-			{ label: 'example', description: "Add examples comments" },
+			{ label: 'example', description: "Add example comments" },
 		];
 		const defaultOptions: vscode.QuickPickItem[] = options.slice(0, -1);
 		const quickPick = vscode.window.createQuickPick();
