@@ -23,7 +23,8 @@
 	],
 	"activationEvents": [
 		"onCommand:ng-afelio.component",
-		"onCommand:ng-afelio.module"
+		"onCommand:ng-afelio.module",
+		"onCommand:ng-afelio.store"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
@@ -35,6 +36,10 @@
 			{
 				"command": "ng-afelio.module",
 				"title": "Generate module (ng-afelio)"
+			},
+			{
+				"command": "ng-afelio.store",
+				"title": "Generate store (ng-afelio)"
 			}
 		],
 		"menus": {
@@ -48,6 +53,11 @@
 					"when": "explorerResourceIsFolder",
 					"command": "ng-afelio.module",
 					"group": "1_modification@2"
+				},
+				{
+					"when": "explorerResourceIsFolder",
+					"command": "ng-afelio.store",
+					"group": "1_modification@3"
 				}
 			]
 		}

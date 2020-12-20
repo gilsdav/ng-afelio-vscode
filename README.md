@@ -14,7 +14,7 @@ For example if there is an image subfolder under your extension project workspac
 
 ## Requirements
 
-This extension can only be use on projet that contains `ng-afelio`.
+This extension can only be used on projet that contains `ng-afelio`.
 If it's not the case, use `ng add ng-afelio`. 
 
 ## Extension Settings
