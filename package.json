@@ -24,7 +24,8 @@
 	"activationEvents": [
 		"onCommand:ng-afelio.component",
 		"onCommand:ng-afelio.module",
-		"onCommand:ng-afelio.store"
+		"onCommand:ng-afelio.store",
+		"onCommand:ng-afelio.check-env"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
@@ -40,6 +41,10 @@
 			{
 				"command": "ng-afelio.store",
 				"title": "Generate store (ng-afelio)"
+			},
+			{
+				"command": "ng-afelio.check-env",
+				"title": "Check env files alignment (ng-afelio)"
 			}
 		],
 		"menus": {
@@ -58,6 +63,11 @@
 					"when": "explorerResourceIsFolder",
 					"command": "ng-afelio.store",
 					"group": "1_modification@3"
+				},
+				{
+					"when": "resourcePath =~ /^.*\/environments$/ || resourceDirname =~ /^.*\/environments$/",
+					"command": "ng-afelio.check-env",
+					"group": "1_modification@4"
 				}
 			]
 		}

@@ -20,6 +20,33 @@ function executeCommand(path: string, command: string, successMessage: string, e
 	})
 }
 
+function executeCommandAndShowResult(path: string, command: string) {
+	return new Promise((resolve, reject) => {
+		console.log('Bob', path, command);
+		cp.exec(command, { cwd: path }, (err, stdout, stderr) => {
+			console.log('stdout: ' + stdout);
+			console.log('stderr: ' + stderr);
+			if (err) {
+				console.log('error: ' + err);
+				vscode.window.showErrorMessage(stderr);
+				reject(err);
+			} else {
+				const results = stdout.trim();
+				openInUntitled(results, 'markdown');
+				resolve('bob' + stdout.trim());
+			}
+		});
+	})
+}
+
+async function openInUntitled(content: string, language?: string) {
+    const document = await vscode.workspace.openTextDocument({
+        language,
+        content,
+    });
+    vscode.window.showTextDocument(document);
+}
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -97,6 +124,21 @@ export function activate(context: vscode.ExtensionContext) {
 		});
 		
 		quickPick.show();
+	}));
+
+	disposables.push(vscode.commands.registerCommand('ng-afelio.check-env', async (currentElement) => {
+		let path: string = currentElement.path;
+		const isFile = path.match(/^.*\/environments\/(.*.ts)$/);
+		let mainFile;
+		if (isFile) {
+			mainFile = isFile[1];
+			path = path.replace(mainFile, '');
+		}
+		const execution = executeCommandAndShowResult(
+			path,
+			`npx ng-afelio check environment ${mainFile ? `-m ${mainFile}` : ''}`
+		);
+		vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution );
 	}));
 
 	context.subscriptions.push(...disposables);
