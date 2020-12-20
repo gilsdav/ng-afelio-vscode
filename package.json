@@ -72,6 +72,11 @@
 			]
 		}
 	},
+	"extensionPack": [
+		"doggy8088.angular-extension-pack",
+		"usernamehw.errorlens",
+		"adam-bender.commit-message-editor"
+	],
 	"scripts": {
 		"vscode:prepublish": "npm run package",
 		"compile": "webpack --config ./build/node-extension.webpack.config.js",
