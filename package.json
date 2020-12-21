@@ -25,7 +25,8 @@
 		"onCommand:ng-afelio.component",
 		"onCommand:ng-afelio.module",
 		"onCommand:ng-afelio.store",
-		"onCommand:ng-afelio.check-env"
+		"onCommand:ng-afelio.check-env",
+		"onCommand:ng-afelio.check-i18n"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
@@ -45,6 +46,10 @@
 			{
 				"command": "ng-afelio.check-env",
 				"title": "Check env files alignment (ng-afelio)"
+			},
+			{
+				"command": "ng-afelio.check-i18n",
+				"title": "Check i18n files alignment (ng-afelio)"
 			}
 		],
 		"menus": {
@@ -68,6 +73,11 @@
 					"when": "resourcePath =~ /^.*\/environments$/ || resourceDirname =~ /^.*\/environments$/",
 					"command": "ng-afelio.check-env",
 					"group": "1_modification@4"
+				},
+				{
+					"when": "resourcePath =~ /^.*\/((locales)|(i18n))(.*.json)?$/",
+					"command": "ng-afelio.check-i18n",
+					"group": "1_modification@5"
 				}
 			]
 		}

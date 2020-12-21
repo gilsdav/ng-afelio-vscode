@@ -141,6 +141,22 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution );
 	}));
 
+	disposables.push(vscode.commands.registerCommand('ng-afelio.check-i18n', async (currentElement) => {
+		let path: string = currentElement.path;
+		const isFile = path.match(/\/([a-z0-9-]+.json)$/);
+		let mainFile;
+		if (isFile) {
+			mainFile = isFile[1];
+			path = path.replace(mainFile, '');
+		}
+		console.log(`npx ng-afelio check i18n ${mainFile ? `-m ${mainFile}` : ''}`, path);
+		const execution = executeCommandAndShowResult(
+			path,
+			`npx ng-afelio check i18n ${mainFile ? `-m ${mainFile}` : ''}`
+		);
+		vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution );
+	}));
+
 	context.subscriptions.push(...disposables);
 }
 
