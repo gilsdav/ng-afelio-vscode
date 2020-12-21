@@ -149,10 +149,26 @@ export function activate(context: vscode.ExtensionContext) {
 			mainFile = isFile[1];
 			path = path.replace(mainFile, '');
 		}
-		console.log(`npx ng-afelio check i18n ${mainFile ? `-m ${mainFile}` : ''}`, path);
 		const execution = executeCommandAndShowResult(
 			path,
 			`npx ng-afelio check i18n ${mainFile ? `-m ${mainFile}` : ''}`
+		);
+		vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution );
+	}));
+
+	disposables.push(vscode.commands.registerCommand('ng-afelio.i18n', async (currentElement) => {
+		let path: string = currentElement.path;
+		const isFile = path.match(/\/(app.module.ts)$/);
+		let appModule;
+		if (isFile) {
+			appModule = isFile[1];
+			path = path.replace(appModule, '');
+		}
+		const execution = executeCommand(
+			path,
+			`npx ng g translate ${appModule ? `--app-module ${appModule}` : ''}`,
+			'Translation system added',
+			'Can not add translation system'
 		);
 		vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution );
 	}));
