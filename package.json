@@ -54,7 +54,7 @@
 			},
 			{
 				"command": "ng-afelio.i18n",
-				"title": "Add translation (i18) system (ng-afelio)"
+				"title": "Add translation (i18n) system (ng-afelio)"
 			}
 		],
 		"menus": {
