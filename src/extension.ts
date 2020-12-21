@@ -166,7 +166,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 		const execution = executeCommand(
 			path,
-			`npx ng g translate ${appModule ? `--app-module ${appModule}` : ''}`,
+			`npx ng g install-translate ${appModule ? `--app-module ${appModule}` : ''}`,
 			'Translation system added',
 			'Can not add translation system'
 		);
