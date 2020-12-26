@@ -27,7 +27,8 @@
 		"onCommand:ng-afelio.store",
 		"onCommand:ng-afelio.check-env",
 		"onCommand:ng-afelio.check-i18n",
-		"onCommand:ng-afelio.i18n"
+		"onCommand:ng-afelio.i18n",
+		"onCommand:ng-afelio.mock"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
@@ -55,6 +56,10 @@
 			{
 				"command": "ng-afelio.i18n",
 				"title": "Add translation (i18n) system (ng-afelio)"
+			},
+			{
+				"command": "ng-afelio.mock",
+				"title": "Generate Mock (ng-afelio)"
 			}
 		],
 		"menus": {
@@ -88,6 +93,11 @@
 					"when": "resourceFilename == app.module.ts",
 					"command": "ng-afelio.i18n",
 					"group": "1_modification@6"
+				},
+				{
+					"when": "resourcePath =~ /^.*\/mocks$/ || resourceDirname =~ /^.*\/mocks$/ && resourceFilename != mocks.ts",
+					"command": "ng-afelio.mock",
+					"group": "1_modification@7"
 				}
 			]
 		}

@@ -173,6 +173,32 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution );
 	}));
 
+	disposables.push(vscode.commands.registerCommand('ng-afelio.mock', async (currentElement) => {
+		const name = await vscode.window.showInputBox({ prompt: 'Name' });
+		if (name === undefined) {
+			return;
+		}
+		let path: string = currentElement.path;
+		const isFile = path.match(/\/(\w*.mock.ts)$/);
+		let mockFile;
+		if (isFile) {
+			mockFile = isFile[1];
+			path = path.replace(mockFile, '');
+		} else {
+			mockFile = await vscode.window.showInputBox({ prompt: 'File name (must end with ".mock.ts")' });
+			if (mockFile === undefined) {
+				return;
+			}
+		}
+		const execution = executeCommand(
+			path,
+			`npx ng g mock ${name} ${mockFile}`,
+			'Mock created',
+			'Can not create mock here'
+		);
+		vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution );
+	}));
+
 	context.subscriptions.push(...disposables);
 }
 
