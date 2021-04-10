@@ -279,6 +279,23 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution );
 	}));
 
+	disposables.push(vscode.commands.registerCommand('ng-afelio.mocks', async (currentElement) => {
+		let path: string = currentElement.path;
+		const isFile = path.match(/\/(app.module.ts)$/);
+		let appModule;
+		if (isFile) {
+			appModule = isFile[1];
+			path = path.replace(appModule, '');
+		}
+		const execution = executeCommand(
+			path,
+			`npx ng g ng-afelio:install-mocks ${appModule ? `--app-module ${appModule}` : ''}`,
+			'Mocks system added',
+			'Can not add mocks system'
+		);
+		vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution );
+	}));
+
 	disposables.push(vscode.commands.registerCommand('ng-afelio.mock', async (currentElement) => {
 		const name = await vscode.window.showInputBox({ prompt: 'Name' });
 		if (name === undefined) {

@@ -28,6 +28,7 @@
 		"onCommand:ng-afelio.check-env",
 		"onCommand:ng-afelio.check-i18n",
 		"onCommand:ng-afelio.i18n",
+		"onCommand:ng-afelio.mocks",
 		"onCommand:ng-afelio.mock",
 		"workspaceContains:**/angular.json"
 	],
@@ -57,6 +58,10 @@
 			{
 				"command": "ng-afelio.i18n",
 				"title": "Add translation (i18n) system (ng-afelio)"
+			},
+			{
+				"command": "ng-afelio.mocks",
+				"title": "Add mocks system (ng-afelio)"
 			},
 			{
 				"command": "ng-afelio.mock",
@@ -96,9 +101,14 @@
 					"group": "1_modification@6"
 				},
 				{
+					"when": "resourceFilename == app.module.ts",
+					"command": "ng-afelio.mocks",
+					"group": "1_modification@7"
+				},
+				{
 					"when": "resourcePath =~ /^.*\/mocks$/ || resourceDirname =~ /^.*\/mocks$/ && resourceFilename != mocks.ts",
 					"command": "ng-afelio.mock",
-					"group": "1_modification@7"
+					"group": "1_modification@8"
 				}
 			]
 		},
