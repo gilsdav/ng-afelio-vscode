@@ -3,40 +3,71 @@
 import * as vscode from 'vscode';
 import * as cp from 'child_process';
 
-function executeCommand(path: string, command: string, successMessage: string, errorMessage: string) {
+function executeCommandBase(path: string, command: string) {
 	return new Promise((resolve, reject) => {
 		cp.exec(command, { cwd: path }, (err, stdout, stderr) => {
 			console.log('stdout: ' + stdout);
 			console.log('stderr: ' + stderr);
 			if (err) {
 				console.log('error: ' + err);
-				reject(err);
-				vscode.window.showErrorMessage(errorMessage);
+				reject({err, stderr});
 			} else {
 				resolve(stdout.trim());
-				vscode.window.showInformationMessage(successMessage);
 			}
 		});
-	})
+	});
+}
+
+function executeCommand(path: string, command: string, successMessage: string, errorMessage: string) {
+	// return new Promise((resolve, reject) => {
+	// 	cp.exec(command, { cwd: path }, (err, stdout, stderr) => {
+	// 		console.log('stdout: ' + stdout);
+	// 		console.log('stderr: ' + stderr);
+	// 		if (err) {
+	// 			console.log('error: ' + err);
+	// 			reject(err);
+	// 			vscode.window.showErrorMessage(errorMessage);
+	// 		} else {
+	// 			resolve(stdout.trim());
+	// 			vscode.window.showInformationMessage(successMessage);
+	// 		}
+	// 	});
+	// })
+	return executeCommandBase(path, command).then(
+		() => {
+			vscode.window.showInformationMessage(successMessage);
+		},
+		() => {
+			vscode.window.showErrorMessage(errorMessage);
+		}
+	);
 }
 
 function executeCommandAndShowResult(path: string, command: string) {
-	return new Promise((resolve, reject) => {
-		console.log('Bob', path, command);
-		cp.exec(command, { cwd: path }, (err, stdout, stderr) => {
-			console.log('stdout: ' + stdout);
-			console.log('stderr: ' + stderr);
-			if (err) {
-				console.log('error: ' + err);
-				vscode.window.showErrorMessage(stderr);
-				reject(err);
-			} else {
-				const results = stdout.trim();
-				openInUntitled(results, 'markdown');
-				resolve('bob' + stdout.trim());
-			}
-		});
-	})
+	// return new Promise((resolve, reject) => {
+	// 	console.log('Bob', path, command);
+	// 	cp.exec(command, { cwd: path }, (err, stdout, stderr) => {
+	// 		console.log('stdout: ' + stdout);
+	// 		console.log('stderr: ' + stderr);
+	// 		if (err) {
+	// 			console.log('error: ' + err);
+	// 			vscode.window.showErrorMessage(stderr);
+	// 			reject(err);
+	// 		} else {
+	// 			const results = stdout.trim();
+	// 			openInUntitled(results, 'markdown');
+	// 			resolve('bob' + stdout.trim());
+	// 		}
+	// 	});
+	// });
+	return executeCommandBase(path, command).then(
+		stdout => {
+			openInUntitled(stdout as string, 'markdown');
+		},
+		error => {
+			vscode.window.showErrorMessage(error.stderr);
+		}
+	);
 }
 
 async function openInUntitled(content: string, language?: string) {
@@ -45,6 +76,60 @@ async function openInUntitled(content: string, language?: string) {
         content,
     });
     vscode.window.showTextDocument(document);
+}
+
+function checkIfCliIsPresent(config: vscode.WorkspaceConfiguration) {
+	if(vscode.workspace.workspaceFolders !== undefined) {
+		let wf = vscode.workspace.workspaceFolders[0].uri.path;
+	
+		executeCommandBase(wf,'npm run ng-afelio -- --version').then(
+			version => {
+				
+				const versionExtract = /Angular Afelio CLI: ([0-9a-zA-Z\.\-]*)/;
+				const versionNumberExtract = /Angular Afelio CLI: ([0-9]\.[0-9])\.[0-9]/;
+				const versionMatch = (version as string).match(versionExtract);
+				const versionNumberMatch = (version as string).match(versionNumberExtract);
+				if (versionMatch && versionNumberMatch && versionNumberMatch.length === 2 ) {
+					if (Number(versionNumberMatch[1]) < 2.0) {
+						vscode.window.showErrorMessage(`The ng-afelio extension is compatible with CLI version >=2.0.0 and you are using the version ${versionMatch[1]} in this project. Please upgrade the ng-afelio CLI.`);
+					}
+				}
+			},
+			async () => {
+				let notFoundConfig = config.get('ng-afelio.when-cli-not-found');
+				if (!notFoundConfig) {
+					const notFoundConfigs: {[key: string]: string} = {
+						'Add to project': 'add',
+						'Install only': 'install',
+						'Do nothing': 'off'
+					};
+					const notFoundAnswer = await vscode.window.showErrorMessage('ng-afelio CLI not found', ...Object.keys(notFoundConfigs));
+					if (notFoundAnswer) {
+						notFoundConfig = notFoundConfigs[notFoundAnswer] as string;
+						if (notFoundConfig === 'off') {
+							config.update('ng-afelio.when-cli-not-found', notFoundConfig, vscode.ConfigurationTarget.Workspace);
+						}
+					}
+					if (notFoundConfig) {
+						switch(notFoundConfig) {
+							case 'add': 
+								vscode.window.showInformationMessage('Add');
+								break;
+							case 'install':
+								vscode.window.showInformationMessage('Install');
+								break;
+							default:
+								break;
+						}
+					}
+				}
+			}
+		)
+	} 
+	else {
+		const message = "ng-afelio: Working folder not found, this extension can not be used into this context." ;
+		vscode.window.showErrorMessage(message);
+	}
 }
 
 // this method is called when your extension is activated
@@ -200,6 +285,11 @@ export function activate(context: vscode.ExtensionContext) {
 	}));
 
 	context.subscriptions.push(...disposables);
+
+	const config = vscode.workspace.getConfiguration();
+
+	checkIfCliIsPresent(config);
+
 }
 
 // this method is called when your extension is deactivated

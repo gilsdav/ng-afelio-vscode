@@ -28,7 +28,8 @@
 		"onCommand:ng-afelio.check-env",
 		"onCommand:ng-afelio.check-i18n",
 		"onCommand:ng-afelio.i18n",
-		"onCommand:ng-afelio.mock"
+		"onCommand:ng-afelio.mock",
+		"workspaceContains:**/angular.json"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
@@ -100,6 +101,28 @@
 					"group": "1_modification@7"
 				}
 			]
+		},
+		"configuration": {
+			"title": "ng-afelio",
+			"properties": {
+				"ng-afelio.when-cli-not-found": {
+					"type":[ "string", "null"],
+					"enum": [
+						"",
+						"off",
+						"add",
+						"install"
+					],
+					"enumDescriptions": [
+						"",
+						"Do not ask again",
+						"Add to project",
+						"Install as dev deps only"
+					],
+					"default": "",
+					"description": "What to do when ng-afelio CLI is not found into your project."
+				}
+			}
 		}
 	},
 	"extensionPack": [
