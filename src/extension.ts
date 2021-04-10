@@ -88,7 +88,7 @@ async function checkIfCliIsPresent(config: vscode.WorkspaceConfiguration) {
 		try {
 			const fileContent = readFileSync(join(wf, 'package.json'), 'utf8');
 			const packageContent = JSON.parse(fileContent);
-			installedNgAfelioVersion = packageContent.devDependencies['ng-afelio'];
+			installedNgAfelioVersion = packageContent.devDependencies['ng-afelio'] || packageContent.dependencies['ng-afelio'];
 		} catch (e) {
 			console.error(e);
 			vscode.window.showErrorMessage('Can not fount package.json into your project.');
@@ -272,7 +272,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 		const execution = executeCommand(
 			path,
-			`npx ng g install-translate ${appModule ? `--app-module ${appModule}` : ''}`,
+			`npx ng g ng-afelio:install-translate ${appModule ? `--app-module ${appModule}` : ''}`,
 			'Translation system added',
 			'Can not add translation system'
 		);
@@ -298,7 +298,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 		const execution = executeCommand(
 			path,
-			`npx ng g mock ${name} ${mockFile}`,
+			`npx ng g ng-afelio:mock ${name} ${mockFile}`,
 			'Mock created',
 			'Can not create mock here'
 		);
