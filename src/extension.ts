@@ -2,6 +2,8 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import * as cp from 'child_process';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
 function executeCommandBase(path: string, command: string) {
 	return new Promise((resolve, reject) => {
@@ -78,53 +80,72 @@ async function openInUntitled(content: string, language?: string) {
     vscode.window.showTextDocument(document);
 }
 
-function checkIfCliIsPresent(config: vscode.WorkspaceConfiguration) {
+async function checkIfCliIsPresent(config: vscode.WorkspaceConfiguration) {
 	if(vscode.workspace.workspaceFolders !== undefined) {
 		let wf = vscode.workspace.workspaceFolders[0].uri.path;
-	
-		executeCommandBase(wf,'npm run ng-afelio -- --version').then(
-			version => {
-				
-				const versionExtract = /Angular Afelio CLI: ([0-9a-zA-Z\.\-]*)/;
-				const versionNumberExtract = /Angular Afelio CLI: ([0-9]\.[0-9])\.[0-9]/;
-				const versionMatch = (version as string).match(versionExtract);
-				const versionNumberMatch = (version as string).match(versionNumberExtract);
-				if (versionMatch && versionNumberMatch && versionNumberMatch.length === 2 ) {
-					if (Number(versionNumberMatch[1]) < 2.0) {
-						vscode.window.showErrorMessage(`The ng-afelio extension is compatible with CLI version >=2.0.0 and you are using the version ${versionMatch[1]} in this project. Please upgrade the ng-afelio CLI.`);
+
+		let installedNgAfelioVersion: string;
+		try {
+			const fileContent = readFileSync(join(wf, 'package.json'), 'utf8');
+			const packageContent = JSON.parse(fileContent);
+			installedNgAfelioVersion = packageContent.devDependencies['ng-afelio'];
+		} catch (e) {
+			console.error(e);
+			vscode.window.showErrorMessage('Can not fount package.json into your project.');
+			return;
+		}
+
+		if (installedNgAfelioVersion) {
+			const versionExtract = /[\^\~]{0,1}([0-9a-zA-Z\.\-]*)/;
+			const versionNumberExtract = /([0-9]\.[0-9])\.[0-9]/;
+			const versionMatch = (installedNgAfelioVersion).match(versionExtract);
+			const versionNumberMatch = (installedNgAfelioVersion).match(versionNumberExtract);
+			if (versionMatch && versionNumberMatch && versionNumberMatch.length === 2 ) {
+				if (Number(versionNumberMatch[1]) < 2.0) {
+					vscode.window.showErrorMessage(`The ng-afelio extension is compatible with CLI version >=2.0.0 and you are using the version ${versionMatch[1]} in this project. Please upgrade the ng-afelio CLI.`);
+				}
+			}
+		} else {
+			let notFoundConfig = config.get('ng-afelio.when-cli-not-found');
+			if (!notFoundConfig) {
+				const notFoundConfigs: {[key: string]: string} = {
+					'Add to project': 'add',
+					'Install only': 'install',
+					'Do nothing': 'off'
+				};
+				const notFoundAnswer = await vscode.window.showErrorMessage('ng-afelio CLI not found', ...Object.keys(notFoundConfigs));
+				if (notFoundAnswer) {
+					notFoundConfig = notFoundConfigs[notFoundAnswer] as string;
+					if (notFoundConfig === 'off') {
+						config.update('ng-afelio.when-cli-not-found', notFoundConfig, vscode.ConfigurationTarget.Workspace);
 					}
 				}
-			},
-			async () => {
-				let notFoundConfig = config.get('ng-afelio.when-cli-not-found');
-				if (!notFoundConfig) {
-					const notFoundConfigs: {[key: string]: string} = {
-						'Add to project': 'add',
-						'Install only': 'install',
-						'Do nothing': 'off'
-					};
-					const notFoundAnswer = await vscode.window.showErrorMessage('ng-afelio CLI not found', ...Object.keys(notFoundConfigs));
-					if (notFoundAnswer) {
-						notFoundConfig = notFoundConfigs[notFoundAnswer] as string;
-						if (notFoundConfig === 'off') {
-							config.update('ng-afelio.when-cli-not-found', notFoundConfig, vscode.ConfigurationTarget.Workspace);
-						}
-					}
-					if (notFoundConfig) {
-						switch(notFoundConfig) {
-							case 'add': 
-								vscode.window.showInformationMessage('Add');
-								break;
-							case 'install':
-								vscode.window.showInformationMessage('Install');
-								break;
-							default:
-								break;
-						}
+				if (notFoundConfig) {
+					switch(notFoundConfig) {
+						case 'add': 
+							const addExecution = executeCommand(
+								wf,
+								`npx ng add ng-afelio@vscode --uiKit=none`,
+								'ng-afelio installed',
+								'Can not install ng-afelio'
+							);
+							vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'We are adding ng-afelio to this project' }, () => addExecution );
+							break;
+						case 'install':
+							const installExecution = executeCommand(
+								wf,
+								`npm install --save-dev ng-afelio@vscode`,
+								'ng-afelio installed',
+								'Can not install ng-afelio'
+							);
+							vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio installation processing' }, () => installExecution );
+							break;
+						default:
+							break;
 					}
 				}
 			}
-		)
+		}
 	} 
 	else {
 		const message = "ng-afelio: Working folder not found, this extension can not be used into this context." ;
