@@ -13,7 +13,9 @@
 	},
 	"keywords": [
 		"VSCode",
-		"ng-afelio"
+		"ng-afelio",
+		"Afelio",
+		"Angular"
 	],
 	"engines": {
 		"vscode": "^1.50.0"
@@ -21,6 +23,7 @@
 	"categories": [
 		"Snippets"
 	],
+	"icon": "doc/images/icon.png",
 	"activationEvents": [
 		"onCommand:ng-afelio.component",
 		"onCommand:ng-afelio.module",
@@ -116,7 +119,7 @@
 			"title": "ng-afelio",
 			"properties": {
 				"ng-afelio.when-cli-not-found": {
-					"type":[ "string", "null"],
+					"type": "string",
 					"enum": [
 						"",
 						"off",
