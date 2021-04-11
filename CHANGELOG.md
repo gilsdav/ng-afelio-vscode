@@ -1,9 +1,14 @@
 # Change Log
 
-All notable changes to the "ng-afelio" extension will be documented in this file.
+## 0.0.1
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+Initial release that contains:
 
-## [Unreleased]
-
-- Initial release
+* generate module
+* generate component
+* generate store
+* generate mock
+* check env files
+* check i18n files
+* install ngx-translate
+* install mock system
