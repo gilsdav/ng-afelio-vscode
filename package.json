@@ -138,7 +138,8 @@
 	"extensionPack": [
 		"doggy8088.angular-extension-pack",
 		"usernamehw.errorlens",
-		"adam-bender.commit-message-editor"
+		"adam-bender.commit-message-editor",
+		"lokalise.i18n-ally"
 	],
 	"scripts": {
 		"vscode:prepublish": "npm run package",
