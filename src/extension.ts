@@ -1,9 +1,9 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
 import * as cp from 'child_process';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import * as vscode from 'vscode';
 
 function executeCommandBase(path: string, command: string) {
 	return new Promise((resolve, reject) => {
@@ -12,7 +12,7 @@ function executeCommandBase(path: string, command: string) {
 			console.log('stderr: ' + stderr);
 			if (err) {
 				console.log('error: ' + err);
-				reject({err, stderr});
+				reject({ err, stderr });
 			} else {
 				resolve(stdout.trim());
 			}
@@ -73,15 +73,15 @@ function executeCommandAndShowResult(path: string, command: string) {
 }
 
 async function openInUntitled(content: string, language?: string) {
-    const document = await vscode.workspace.openTextDocument({
-        language,
-        content,
-    });
-    vscode.window.showTextDocument(document);
+	const document = await vscode.workspace.openTextDocument({
+		language,
+		content,
+	});
+	vscode.window.showTextDocument(document);
 }
 
 async function checkIfCliIsPresent(config: vscode.WorkspaceConfiguration) {
-	if(vscode.workspace.workspaceFolders !== undefined) {
+	if (vscode.workspace.workspaceFolders !== undefined) {
 		let wf = vscode.workspace.workspaceFolders[0].uri.path;
 
 		let installedNgAfelioVersion: string;
@@ -100,7 +100,7 @@ async function checkIfCliIsPresent(config: vscode.WorkspaceConfiguration) {
 			const versionNumberExtract = /([0-9]\.[0-9])\.[0-9]/;
 			const versionMatch = (installedNgAfelioVersion).match(versionExtract);
 			const versionNumberMatch = (installedNgAfelioVersion).match(versionNumberExtract);
-			if (versionMatch && versionNumberMatch && versionNumberMatch.length === 2 ) {
+			if (versionMatch && versionNumberMatch && versionNumberMatch.length === 2) {
 				if (Number(versionNumberMatch[1]) < 2.0) {
 					vscode.window.showErrorMessage(`The ng-afelio extension is compatible with CLI version >=2.0.0 and you are using the version ${versionMatch[1]} in this project. Please upgrade the ng-afelio CLI.`);
 				}
@@ -108,7 +108,7 @@ async function checkIfCliIsPresent(config: vscode.WorkspaceConfiguration) {
 		} else {
 			let notFoundConfig = config.get('ng-afelio.when-cli-not-found');
 			if (!notFoundConfig) {
-				const notFoundConfigs: {[key: string]: string} = {
+				const notFoundConfigs: { [key: string]: string } = {
 					'Add to project': 'add',
 					'Install only': 'install',
 					'Do nothing': 'off'
@@ -121,15 +121,15 @@ async function checkIfCliIsPresent(config: vscode.WorkspaceConfiguration) {
 					}
 				}
 				if (notFoundConfig) {
-					switch(notFoundConfig) {
-						case 'add': 
+					switch (notFoundConfig) {
+						case 'add':
 							const addExecution = executeCommand(
 								wf,
 								`npx ng add ng-afelio@vscode --uiKit=none`,
 								'ng-afelio installed',
 								'Can not install ng-afelio'
 							);
-							vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'We are adding ng-afelio to this project' }, () => addExecution );
+							vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'We are adding ng-afelio to this project' }, () => addExecution);
 							break;
 						case 'install':
 							const installExecution = executeCommand(
@@ -138,7 +138,7 @@ async function checkIfCliIsPresent(config: vscode.WorkspaceConfiguration) {
 								'ng-afelio installed',
 								'Can not install ng-afelio'
 							);
-							vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio installation processing' }, () => installExecution );
+							vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio installation processing' }, () => installExecution);
 							break;
 						default:
 							break;
@@ -146,9 +146,9 @@ async function checkIfCliIsPresent(config: vscode.WorkspaceConfiguration) {
 				}
 			}
 		}
-	} 
+	}
 	else {
-		const message = "ng-afelio: Working folder not found, this extension can not be used into this context." ;
+		const message = "ng-afelio: Working folder not found, this extension can not be used into this context.";
 		vscode.window.showErrorMessage(message);
 	}
 }
@@ -180,7 +180,7 @@ export function activate(context: vscode.ExtensionContext) {
 			'Component created',
 			'Can not create component here'
 		);
-		vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution );
+		vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution);
 	}));
 
 	disposables.push(vscode.commands.registerCommand('ng-afelio.module', async (currentElement) => {
@@ -194,7 +194,7 @@ export function activate(context: vscode.ExtensionContext) {
 			'Module created',
 			'Can not create module here'
 		);
-		vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution );
+		vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution);
 	}));
 
 	disposables.push(vscode.commands.registerCommand('ng-afelio.store', async (currentElement) => {
@@ -212,7 +212,7 @@ export function activate(context: vscode.ExtensionContext) {
 		quickPick.canSelectMany = true;
 		quickPick.items = options;
 		quickPick.selectedItems = defaultOptions;
-		
+
 		quickPick.onDidAccept(() => {
 			const selectedOptions: string = options.reduce((result: string, item: vscode.QuickPickItem) => {
 				const isSelected = quickPick.selectedItems.includes(item);
@@ -226,9 +226,9 @@ export function activate(context: vscode.ExtensionContext) {
 				'Store created',
 				'Can not create store here'
 			);
-			vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution );
+			vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution);
 		});
-		
+
 		quickPick.show();
 	}));
 
@@ -244,7 +244,7 @@ export function activate(context: vscode.ExtensionContext) {
 			path,
 			`npx ng-afelio check environment ${mainFile ? `-m ${mainFile}` : ''}`
 		);
-		vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution );
+		vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution);
 	}));
 
 	disposables.push(vscode.commands.registerCommand('ng-afelio.check-i18n', async (currentElement) => {
@@ -259,7 +259,24 @@ export function activate(context: vscode.ExtensionContext) {
 			path,
 			`npx ng-afelio check i18n ${mainFile ? `-m ${mainFile}` : ''}`
 		);
-		vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution );
+		vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution);
+	}));
+
+	disposables.push(vscode.commands.registerCommand('ng-afelio.fix-i18n', async (currentElement) => {
+		let path: string = currentElement.path;
+		const isFile = path.match(/\/([a-z0-9-]+.json)$/);
+		let mainFile;
+		if (isFile) {
+			mainFile = isFile[1];
+			path = path.replace(mainFile, '');
+		}
+		const execution = executeCommand(
+			path,
+			`npx ng-afelio check i18n ${mainFile ? `-m ${mainFile}` : ''} --fix`,
+			'i18n aligned',
+			'Can not align i18n'
+		);
+		vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution);
 	}));
 
 	disposables.push(vscode.commands.registerCommand('ng-afelio.i18n', async (currentElement) => {
@@ -276,7 +293,7 @@ export function activate(context: vscode.ExtensionContext) {
 			'Translation system added',
 			'Can not add translation system'
 		);
-		vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution );
+		vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution);
 	}));
 
 	disposables.push(vscode.commands.registerCommand('ng-afelio.mocks', async (currentElement) => {
@@ -293,7 +310,7 @@ export function activate(context: vscode.ExtensionContext) {
 			'Mocks system added',
 			'Can not add mocks system'
 		);
-		vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution );
+		vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution);
 	}));
 
 	disposables.push(vscode.commands.registerCommand('ng-afelio.mock', async (currentElement) => {
@@ -319,7 +336,7 @@ export function activate(context: vscode.ExtensionContext) {
 			'Mock created',
 			'Can not create mock here'
 		);
-		vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution );
+		vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution);
 	}));
 
 	context.subscriptions.push(...disposables);
@@ -331,4 +348,4 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }

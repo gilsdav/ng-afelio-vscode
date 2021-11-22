@@ -30,6 +30,7 @@
 		"onCommand:ng-afelio.store",
 		"onCommand:ng-afelio.check-env",
 		"onCommand:ng-afelio.check-i18n",
+		"onCommand:ng-afelio.fix-i18n",
 		"onCommand:ng-afelio.i18n",
 		"onCommand:ng-afelio.mocks",
 		"onCommand:ng-afelio.mock",
@@ -40,7 +41,7 @@
 		"commands": [
 			{
 				"command": "ng-afelio.component",
-				"title": "Generate component (ng-afelio)"
+				"title": "Generate component (ng-afelio coucou)"
 			},
 			{
 				"command": "ng-afelio.module",
@@ -57,6 +58,10 @@
 			{
 				"command": "ng-afelio.check-i18n",
 				"title": "Check i18n files alignment (ng-afelio)"
+			},
+			{
+				"command": "ng-afelio.fix-i18n",
+				"title": "Fix i18n files alignment (ng-afelio)"
 			},
 			{
 				"command": "ng-afelio.i18n",
@@ -89,12 +94,12 @@
 					"group": "1_modification@3"
 				},
 				{
-					"when": "resourcePath =~ /^.*\/environments$/ || resourceDirname =~ /^.*\/environments$/",
+					"when": "resourcePath =~ /^.*/environments$/ || resourceDirname =~ /^.*/environments$/",
 					"command": "ng-afelio.check-env",
 					"group": "1_modification@4"
 				},
 				{
-					"when": "resourcePath =~ /^.*\/((locales)|(i18n))(.*.json)?$/",
+					"when": "resourcePath =~ /^.*/((locales)|(i18n))(.*.json)?$/",
 					"command": "ng-afelio.check-i18n",
 					"group": "1_modification@5"
 				},
@@ -109,9 +114,14 @@
 					"group": "1_modification@7"
 				},
 				{
-					"when": "resourcePath =~ /^.*\/mocks$/ || resourceDirname =~ /^.*\/mocks$/ && resourceFilename != mocks.ts",
+					"when": "resourcePath =~ /^.*/mocks$/ || resourceDirname =~ /^.*/mocks$/ && resourceFilename != mocks.ts",
 					"command": "ng-afelio.mock",
 					"group": "1_modification@8"
+				},
+				{
+					"when": "",
+					"command": "ng-afelio.fix-i18n",
+					"group": "1_modification@9"
 				}
 			]
 		},
