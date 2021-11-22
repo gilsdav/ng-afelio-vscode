@@ -41,7 +41,7 @@
 		"commands": [
 			{
 				"command": "ng-afelio.component",
-				"title": "Generate component (ng-afelio coucou)"
+				"title": "Generate component (ng-afelio)"
 			},
 			{
 				"command": "ng-afelio.module",
@@ -119,7 +119,7 @@
 					"group": "1_modification@8"
 				},
 				{
-					"when": "",
+					"when": "resourcePath =~ /^.*/((locales)|(i18n))(.*.json)?$/",
 					"command": "ng-afelio.fix-i18n",
 					"group": "1_modification@9"
 				}
