@@ -8,6 +8,7 @@ Add new features:
 * install ngxs
 * install oidc
 * install error handler
+* install ui-kit
 * snippet barrel
 * snippet model
 * snippet cctor

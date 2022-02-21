@@ -13,6 +13,10 @@ This is the VS Code extension of [`ng-afelio`](https://www.npmjs.com/package/ng-
 * install OIDC
 * install Error Handler
 
+![install](doc/images/install-global.png)
+
+* install UI Kit
+
 ### Generations
 ![generate](doc/images/generate.png)
 
@@ -74,6 +78,7 @@ Add new features:
 * install ngxs
 * install oidc
 * install error handler
+* install ui-kit
 * snippet barrel
 * snippet model
 * snippet cctor
