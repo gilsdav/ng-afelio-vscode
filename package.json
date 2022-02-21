@@ -2,7 +2,7 @@
 	"name": "ng-afelio",
 	"displayName": "ng-afelio",
 	"description": "Graphical interface for ng-afelio",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"author": "David Gilson <davgilson@live.fr>",
 	"publisher": "gilsdav",
 	"homepage": "https://github.com/gilsdav/ng-afelio-vscode",
@@ -27,12 +27,16 @@
 	"activationEvents": [
 		"onCommand:ng-afelio.component",
 		"onCommand:ng-afelio.module",
+		"onCommand:ng-afelio.stores",
 		"onCommand:ng-afelio.store",
 		"onCommand:ng-afelio.check-env",
 		"onCommand:ng-afelio.check-i18n",
 		"onCommand:ng-afelio.i18n",
 		"onCommand:ng-afelio.mocks",
 		"onCommand:ng-afelio.mock",
+		"onCommand:ng-afelio.oidc",
+		"onCommand:ng-afelio.uikit",
+		"onCommand:ng-afelio.errorHandler",
 		"workspaceContains:**/angular.json"
 	],
 	"main": "./dist/extension.js",
@@ -45,6 +49,10 @@
 			{
 				"command": "ng-afelio.module",
 				"title": "Generate module (ng-afelio)"
+			},
+			{
+				"command": "ng-afelio.stores",
+				"title": "Add store (NGXS) system (ng-afelio)"
 			},
 			{
 				"command": "ng-afelio.store",
@@ -69,7 +77,20 @@
 			{
 				"command": "ng-afelio.mock",
 				"title": "Generate Mock (ng-afelio)"
+			},
+			{
+				"command": "ng-afelio.oidc",
+				"title": "Add Auth (OIDC) system (ng-afelio)"
+			},
+			{
+				"command": "ng-afelio.uikit",
+				"title": "Add UI Kit system (ng-afelio)"
+			},
+			{
+				"command": "ng-afelio.errorHandler",
+				"title": "Add Error handler system (ng-afelio)"
 			}
+			
 		],
 		"menus": {
 			"explorer/context": [
@@ -112,6 +133,26 @@
 					"when": "resourcePath =~ /^.*\/mocks$/ || resourceDirname =~ /^.*\/mocks$/ && resourceFilename != mocks.ts",
 					"command": "ng-afelio.mock",
 					"group": "1_modification@8"
+				},
+				{
+					"when": "resourceFilename == app.module.ts",
+					"command": "ng-afelio.stores",
+					"group": "1_modification@9"
+				},
+				{
+					"when": "resourceFilename == app.module.ts",
+					"command": "ng-afelio.oidc",
+					"group": "1_modification@10"
+				},
+				{
+					"when": "resourceFilename == angular.json",
+					"command": "ng-afelio.uikit",
+					"group": "1_modification@11"
+				},
+				{
+					"when": "resourceFilename == app.module.ts",
+					"command": "ng-afelio.errorHandler",
+					"group": "1_modification@12"
 				}
 			]
 		},
@@ -136,7 +177,13 @@
 					"description": "What to do when ng-afelio CLI is not found into your project."
 				}
 			}
-		}
+		},
+		"snippets": [
+			{
+			  "language": "typescript",
+			  "path": "./snippets/typescript.code-snippets"
+			}
+		  ]
 	},
 	"extensionPack": [
 		"doggy8088.angular-extension-pack",

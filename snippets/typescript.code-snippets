@@ -1,0 +1,75 @@
+{
+	// Place your espace de travail frontend snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders.
+	// Placeholders with the same ids are connected.
+	"Create barrel structure": {
+		"scope": "typescript",
+		"prefix": "af-barrel",
+		"body": [
+			"import { ${3:MyComponent} } from '${2:./my-component/my-component.component.ts}';",
+			"",
+			"export const ${1:components} = [",
+            "    ${3:MyComponent}",
+			"];",
+			"export * from '${2:./my-component/my-component.component.ts}';"
+		],
+		"description": "Create barrel structure"
+	},
+	"Create base model": {
+        "scope": "typescript",
+        "prefix": "af-model",
+        "body": [
+			"class ${1:MyModel} {",
+			"",
+			"\t$3",
+			"",
+            "\tconstructor(base?: Partial<${1:MyModel}>) {",
+            "\t\tif (base) {",
+            "\t\t\tObject.assign(this, base);",
+            "\t\t}",
+            "\t}",
+            "",
+            "\tpublic static fromDto(dto: ${2:MyDto}): ${1:MyModel} | null {",
+            "\t\tif (!dto) {",
+            "\t\t\treturn null;",
+            "\t\t}",
+            "\t\treturn new ${1:MyModel}({",
+            "\t\t\t$4",
+            "\t\t});",
+            "\t}",
+			"",
+			"\tpublic toDto(): ${2:MyDto} {",
+            "\t\treturn {",
+            "\t\t\t$5",
+            "\t\t};",
+            "\t}",
+			"",
+			"}"
+        ],
+        "description": "Model with mapper from and to dto"
+	},
+	"Create partial model constructor": {
+        "scope": "typescript",
+        "prefix": "af-cctor",
+        "body": [
+            "constructor(base?: Partial<${1:MyModel}>) {",
+            "\tif (base) {",
+            "\t\tObject.assign(this, base);",
+            "\t}",
+            "}",
+            "",
+            "public static fromDto(dto: ${2:MyDto}): ${1:MyModel} | null {",
+            "\tif (!dto) {",
+            "\t\treturn null;",
+            "\t}",
+            "\treturn new ${1:MyModel}({",
+            "\t\t$3",
+            "\t});",
+            "}"
+        ],
+        "description": "Contructor with mapper fromDto"
+	},
+}

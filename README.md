@@ -1,27 +1,31 @@
 # NG Afelio
 
-This is the VS Code extension of `ng-afelio` CLI.
+This is the VS Code extension of [`ng-afelio`](https://www.npmjs.com/package/ng-afelio) CLI.
 
 ## Features
 
+### Installations
 ![install](doc/images/install.png)
 
 * install ngx-translate
 * install mock system
-* *install NGXS (comming soon)*
-* *install OIDC (comming soon)*
+* install NGXS
+* install OIDC
+* install Error Handler
 
+### Generations
 ![generate](doc/images/generate.png)
 
 * generate module
 * generate component
 * generate store
 * generate mock
-* generate service
+* *generate service (comming soon)*
 * *generate pipe (comming soon)*
 * *generate guard (comming soon)*
 * *generate directive (comming soon)*
 
+### Checking / Fix
 ![check-env](doc/images/check-env.png)
 
 * check env files
@@ -29,6 +33,15 @@ This is the VS Code extension of `ng-afelio` CLI.
 ![check-i18n](doc/images/check-i18n.png)
 
 * check i18n files
+
+### Snippets
+![check-i18n](doc/images/snippets.png)
+
+Utilisablent avec le préfix `af-`
+
+* barrel
+* model
+* cctor (constructor)
 
 ## Requirements
 
@@ -52,6 +65,18 @@ This extension contributes the following settings:
 No known issues
 
 ## Release Notes
+
+### 0.0.2
+
+Add new features:
+
+* update generate module
+* install ngxs
+* install oidc
+* install error handler
+* snippet barrel
+* snippet model
+* snippet cctor
 
 ### 0.0.1
 

@@ -3,7 +3,7 @@
 import * as vscode from 'vscode';
 import * as cp from 'child_process';
 import { readFileSync } from 'fs';
-import { join } from 'path';
+import { join, dirname } from 'path';
 
 function executeCommandBase(path: string, command: string) {
 	return new Promise((resolve, reject) => {
@@ -125,7 +125,7 @@ async function checkIfCliIsPresent(config: vscode.WorkspaceConfiguration) {
 						case 'add': 
 							const addExecution = executeCommand(
 								wf,
-								`npx ng add ng-afelio@vscode --uiKit=none`,
+								`npx ng add ng-afelio@vscode --uiKit=none --skip-confirmation`,
 								'ng-afelio installed',
 								'Can not install ng-afelio'
 							);
@@ -188,11 +188,49 @@ export function activate(context: vscode.ExtensionContext) {
 		if (name === undefined) {
 			return;
 		}
+		const options: vscode.QuickPickItem[] = [
+			{ label: 'guards', description: "Add guards folder" },
+			{ label: 'pipes', description: "Add pipes folder" },
+			{ label: 'stores', description: "Add stores folder" },
+		];
+		const quickPick = vscode.window.createQuickPick();
+		quickPick.canSelectMany = true;
+		quickPick.items = options;
+
+		quickPick.onDidAccept(() => {
+			const selectedOptions: string = options.reduce((result: string, item: vscode.QuickPickItem) => {
+				const isSelected = quickPick.selectedItems.includes(item);
+				return `${result} --${item.label}=${isSelected}`;
+			}, '');
+
+			const command = `npx ng g ng-afelio:module ${name}${selectedOptions}`;
+			quickPick.hide();
+
+			const execution = executeCommand(
+				currentElement.path,
+				command,
+				'Module created',
+				'Can not create module here'
+			);
+			vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution );
+		});
+		
+		quickPick.show();
+	}));
+
+	disposables.push(vscode.commands.registerCommand('ng-afelio.stores', async (currentElement) => {
+		let path: string = currentElement.path;
+		const isFile = path.match(/\/(app.module.ts)$/);
+		let appModule;
+		if (isFile) {
+			appModule = isFile[1];
+			path = path.replace(appModule, '');
+		}
 		const execution = executeCommand(
-			currentElement.path,
-			`npx ng g ng-afelio:module ${name}`,
-			'Module created',
-			'Can not create module here'
+			path,
+			`npx ng g ng-afelio:install-store ${appModule ? `--app-module ${appModule}` : ''}`,
+			'NGXS installed',
+			'Can not install NGXS'
 		);
 		vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution );
 	}));
@@ -202,7 +240,7 @@ export function activate(context: vscode.ExtensionContext) {
 		if (name === undefined) {
 			return;
 		}
-		const options: vscode.QuickPickItem[] = [ // 'barrel', 'spec', 'example'
+		const options: vscode.QuickPickItem[] = [
 			{ label: 'barrel', description: "Add into Barrel" },
 			{ label: 'spec', description: "Create spec file" },
 			{ label: 'example', description: "Add example comments" },
@@ -320,6 +358,94 @@ export function activate(context: vscode.ExtensionContext) {
 			'Can not create mock here'
 		);
 		vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution );
+	}));
+
+	disposables.push(vscode.commands.registerCommand('ng-afelio.oidc', async (currentElement) => {
+		let path: string = currentElement.path;
+		const isFile = path.match(/\/(app.module.ts)$/);
+		let appModule;
+		if (isFile) {
+			appModule = isFile[1];
+			path = path.replace(appModule, '');
+		}
+		const execution = executeCommand(
+			path,
+			`npx ng g ng-afelio:install-oidc ${appModule ? `--app-module ${appModule}` : ''}`,
+			'OIDC installed',
+			'Can not install OIDC'
+		);
+		vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution );
+	}));
+
+	disposables.push(vscode.commands.registerCommand('ng-afelio.uikit', async (currentElement) => {
+		let path: string = dirname(currentElement.path);
+
+		const options: vscode.QuickPickItem[] = [
+			{ label: 'afelio' },
+			{ label: 'boostrap' }
+		];
+		const defaultOptions: vscode.QuickPickItem[] = options.slice(0, -1);
+		const quickPick = vscode.window.createQuickPick();
+		quickPick.canSelectMany = false;
+		quickPick.items = options;
+		quickPick.selectedItems = defaultOptions;
+		
+		quickPick.onDidAccept(() => {
+			const selectedOption = quickPick.selectedItems[0];
+			quickPick.hide();
+
+			if (!selectedOption) {
+				return;
+			}
+
+			const execution = executeCommand(
+				path,
+				`npx ng g ng-afelio:install-uikit --type ${selectedOption.label}`,
+				'UI Kit added',
+				'Can not add UI Kit'
+			);
+			vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution );
+		});
+
+		quickPick.show();
+	}));
+
+	disposables.push(vscode.commands.registerCommand('ng-afelio.errorHandler', async (currentElement) => {
+		let path: string = currentElement.path;
+		const isFile = path.match(/\/(app.module.ts)$/);
+		let appModule: string;
+		if (isFile) {
+			appModule = isFile[1];
+			path = path.replace(appModule, '');
+		}
+
+		const options: vscode.QuickPickItem[] = [
+			{ label: 'useNgxToastr', description: "Use NgxToastr" }
+		];
+		const quickPick = vscode.window.createQuickPick();
+		quickPick.canSelectMany = true;
+		quickPick.items = options;
+		quickPick.selectedItems = options.slice();
+
+		quickPick.onDidAccept(() => {
+			const selectedOptions: string = options.reduce((result: string, item: vscode.QuickPickItem) => {
+				const isSelected = quickPick.selectedItems.includes(item);
+				return `${result} --${item.label}=${isSelected}`;
+			}, '');
+
+			const command = `npx ng g ng-afelio:install-error-handler ${appModule ? `--app-module ${appModule}` : ''} ${selectedOptions}`;
+			quickPick.hide();
+
+			const execution = executeCommand(
+				path,
+				command,
+				'Error Handler system added',
+				'Can not add Error Handler'
+			);
+			vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: 'ng-afelio processing' }, () => execution );
+		});
+		
+		quickPick.show();
 	}));
 
 	context.subscriptions.push(...disposables);

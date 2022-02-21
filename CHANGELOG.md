@@ -1,5 +1,17 @@
 # Change Log
 
+### 0.0.2
+
+Add new features:
+
+* update generate module
+* install ngxs
+* install oidc
+* install error handler
+* snippet barrel
+* snippet model
+* snippet cctor
+
 ## 0.0.1
 
 Initial release that contains:
