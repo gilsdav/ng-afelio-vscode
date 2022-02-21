@@ -2,7 +2,7 @@
 	"name": "ng-afelio",
 	"displayName": "ng-afelio",
 	"description": "Graphical interface for ng-afelio",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"author": "David Gilson <davgilson@live.fr>",
 	"publisher": "gilsdav",
 	"homepage": "https://github.com/gilsdav/ng-afelio-vscode",
