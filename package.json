@@ -40,6 +40,7 @@
 		"onCommand:ng-afelio.service",
 		"onCommand:ng-afelio.pipe",
 		"onCommand:ng-afelio.directive",
+		"onCommand:ng-afelio.guard",
 		"workspaceContains:**/angular.json"
 	],
 	"main": "./dist/extension.js",
@@ -104,6 +105,10 @@
 			{
 				"command": "ng-afelio.directive",
 				"title": "Generate directive (ng-afelio)"
+			},
+			{
+				"command": "ng-afelio.guard",
+				"title": "Generate guard (ng-afelio)"
 			}
 			
 		],
@@ -182,6 +187,11 @@
 				{
 					"when": "explorerResourceIsFolder",
 					"command": "ng-afelio.directive",
+					"group": "1_modification@15"
+				},
+				{
+					"when": "explorerResourceIsFolder",
+					"command": "ng-afelio.guard",
 					"group": "1_modification@15"
 				}
 			]

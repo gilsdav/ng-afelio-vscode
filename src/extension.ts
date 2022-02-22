@@ -16,6 +16,7 @@ import { errorHander } from './error-handler';
 import { ngService } from './service';
 import { ngPipe } from './pipe';
 import { ngDirective } from './directive';
+import { ngGuard } from './guard';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -47,6 +48,7 @@ export function activate(context: vscode.ExtensionContext) {
 	disposables.push(ngService());
 	disposables.push(ngPipe());
 	disposables.push(ngDirective());
+	disposables.push(ngGuard());
 	// #endregion all commands
 
 	context.subscriptions.push(...disposables);
