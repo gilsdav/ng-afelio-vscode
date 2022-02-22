@@ -24,10 +24,10 @@ This is the VS Code extension of [`ng-afelio`](https://www.npmjs.com/package/ng-
 * generate component
 * generate store
 * generate mock
-* *generate service (comming soon)*
-* *generate pipe (comming soon)*
-* *generate guard (comming soon)*
-* *generate directive (comming soon)*
+* generate service
+* generate pipe
+* generate guard
+* generate directive
 
 ### Checking / Fix
 ![check-env](doc/images/check-env.png)
