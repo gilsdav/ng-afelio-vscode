@@ -13,6 +13,7 @@ import { mock, mocks } from './mocks';
 import { oidc } from './oidc';
 import { uikit } from './uikit';
 import { errorHander } from './error-handler';
+import { ngService } from './service';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -41,6 +42,7 @@ export function activate(context: vscode.ExtensionContext) {
 	disposables.push(oidc());
 	disposables.push(uikit());
 	disposables.push(errorHander());
+	disposables.push(ngService());
 	// #endregion all commands
 
 	context.subscriptions.push(...disposables);

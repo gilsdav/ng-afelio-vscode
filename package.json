@@ -37,6 +37,7 @@
 		"onCommand:ng-afelio.oidc",
 		"onCommand:ng-afelio.uikit",
 		"onCommand:ng-afelio.errorHandler",
+		"onCommand:ng-afelio.service",
 		"workspaceContains:**/angular.json"
 	],
 	"main": "./dist/extension.js",
@@ -89,6 +90,10 @@
 			{
 				"command": "ng-afelio.errorHandler",
 				"title": "Add Error handler system (ng-afelio)"
+			},
+			{
+				"command": "ng-afelio.service",
+				"title": "Generate service (ng-afelio)"
 			}
 			
 		],
@@ -153,6 +158,11 @@
 					"when": "resourceFilename == app.module.ts",
 					"command": "ng-afelio.errorHandler",
 					"group": "1_modification@12"
+				},
+				{
+					"when": "explorerResourceIsFolder",
+					"command": "ng-afelio.service",
+					"group": "1_modification@13"
 				}
 			]
 		},
