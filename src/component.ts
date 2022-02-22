@@ -11,8 +11,9 @@ export function ngComponent() {
 
         const options: vscode.QuickPickItem[] = [
             { label: 'barrel', description: "Add into Barrel" },
+            { label: 'isContainer', description: "Is container" },
         ];
-        const defaultOptions: vscode.QuickPickItem[] = options.slice();
+        const defaultOptions: vscode.QuickPickItem[] = options.slice(0, -1);
         const quickPick = vscode.window.createQuickPick();
         quickPick.canSelectMany = true;
         quickPick.items = options;
@@ -21,6 +22,13 @@ export function ngComponent() {
         quickPick.onDidAccept(() => {
             const selectedOptions: string = options.reduce((result: string, item: vscode.QuickPickItem) => {
                 const isSelected = quickPick.selectedItems.includes(item);
+                if (item.label === 'isContainer') {
+                    if (isSelected) {
+                        return `${result} --barrelName=containers`;
+                    } else {
+                        return result;
+                    }
+                }
                 return `${result} --${item.label}=${isSelected}`;
             }, '');
             const command = `npx ng g ng-afelio:component ${name}${selectedOptions}`;
