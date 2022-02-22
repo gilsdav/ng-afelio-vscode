@@ -14,6 +14,7 @@ import { oidc } from './oidc';
 import { uikit } from './uikit';
 import { errorHander } from './error-handler';
 import { ngService } from './service';
+import { ngPipe } from './pipe';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -43,6 +44,7 @@ export function activate(context: vscode.ExtensionContext) {
 	disposables.push(uikit());
 	disposables.push(errorHander());
 	disposables.push(ngService());
+	disposables.push(ngPipe());
 	// #endregion all commands
 
 	context.subscriptions.push(...disposables);

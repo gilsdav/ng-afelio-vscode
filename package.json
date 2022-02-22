@@ -38,6 +38,7 @@
 		"onCommand:ng-afelio.uikit",
 		"onCommand:ng-afelio.errorHandler",
 		"onCommand:ng-afelio.service",
+		"onCommand:ng-afelio.pipe",
 		"workspaceContains:**/angular.json"
 	],
 	"main": "./dist/extension.js",
@@ -94,6 +95,10 @@
 			{
 				"command": "ng-afelio.service",
 				"title": "Generate service (ng-afelio)"
+			},
+			{
+				"command": "ng-afelio.pipe",
+				"title": "Generate pipe (ng-afelio)"
 			}
 			
 		],
@@ -163,6 +168,11 @@
 					"when": "explorerResourceIsFolder",
 					"command": "ng-afelio.service",
 					"group": "1_modification@13"
+				},
+				{
+					"when": "explorerResourceIsFolder",
+					"command": "ng-afelio.pipe",
+					"group": "1_modification@14"
 				}
 			]
 		},
