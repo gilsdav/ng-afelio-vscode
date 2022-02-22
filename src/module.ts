@@ -11,6 +11,7 @@ export function ngModule() {
 			{ label: 'guards', description: "Add guards folder" },
 			{ label: 'pipes', description: "Add pipes folder" },
 			{ label: 'stores', description: "Add stores folder" },
+			{ label: 'directives', description: "Add directives folder" },
 		];
 		const quickPick = vscode.window.createQuickPick();
 		quickPick.canSelectMany = true;

@@ -39,6 +39,7 @@
 		"onCommand:ng-afelio.errorHandler",
 		"onCommand:ng-afelio.service",
 		"onCommand:ng-afelio.pipe",
+		"onCommand:ng-afelio.directive",
 		"workspaceContains:**/angular.json"
 	],
 	"main": "./dist/extension.js",
@@ -99,6 +100,10 @@
 			{
 				"command": "ng-afelio.pipe",
 				"title": "Generate pipe (ng-afelio)"
+			},
+			{
+				"command": "ng-afelio.directive",
+				"title": "Generate directive (ng-afelio)"
 			}
 			
 		],
@@ -173,6 +178,11 @@
 					"when": "explorerResourceIsFolder",
 					"command": "ng-afelio.pipe",
 					"group": "1_modification@14"
+				},
+				{
+					"when": "explorerResourceIsFolder",
+					"command": "ng-afelio.directive",
+					"group": "1_modification@15"
 				}
 			]
 		},
