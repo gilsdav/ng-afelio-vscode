@@ -23,7 +23,7 @@ export function stores() {
 export function store() {
     return vscode.commands.registerCommand('ng-afelio.store', async (currentElement) => {
         const name = await vscode.window.showInputBox({ prompt: 'Name' });
-        if (name === undefined) {
+        if (!name) {
             return;
         }
         const options: vscode.QuickPickItem[] = [

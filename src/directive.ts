@@ -5,7 +5,7 @@ export function ngDirective() {
     return vscode.commands.registerCommand('ng-afelio.directive', async (currentElement) => {
         // The code you place here will be executed every time your command is executed
         const name = await vscode.window.showInputBox({ prompt: 'Name' });
-        if (name === undefined) {
+        if (!name) {
             return;
         }
 

@@ -23,7 +23,7 @@ export function mocks() {
 export function mock() {
     return vscode.commands.registerCommand('ng-afelio.mock', async (currentElement) => {
         const name = await vscode.window.showInputBox({ prompt: 'Name' });
-        if (name === undefined) {
+        if (!name) {
             return;
         }
         let path: string = currentElement.path;

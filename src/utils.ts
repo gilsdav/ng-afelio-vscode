@@ -1,11 +1,23 @@
 import * as vscode from 'vscode';
 import * as cp from 'child_process';
 import { readFileSync } from 'fs';
-import { join } from 'path';
+import { join, delimiter } from 'path';
 
 export function executeCommandBase(path: string, command: string) {
+	const config = vscode.workspace.getConfiguration();
+	const nodePath: string | undefined = config.get('ng-afelio.node-path');
+
+	let env: NodeJS.ProcessEnv | undefined;
+
+	if (nodePath) {
+		const pathKey = Object.keys(process.env).find(x => x.toUpperCase() === 'PATH') as string;
+		env = {
+			[pathKey]: nodePath + delimiter + process.env[pathKey]
+		};
+	}
+
 	return new Promise((resolve, reject) => {
-		cp.exec(command, { cwd: path }, (err, stdout, stderr) => {
+		cp.exec(command, { cwd: path, env }, (err, stdout, stderr) => {
 			console.log('stdout: ' + stdout);
 			console.log('stderr: ' + stderr);
 			if (err) {
@@ -37,8 +49,12 @@ export function executeCommand(path: string, command: string, successMessage: st
 		() => {
 			vscode.window.showInformationMessage(successMessage);
 		},
-		() => {
-			vscode.window.showErrorMessage(errorMessage);
+		(error) => {
+			vscode.window.showErrorMessage(errorMessage, 'Show error').then((value) => {
+				if (value === 'Show error') {
+					vscode.window.showErrorMessage(error?.stderr);
+				}
+			});
 		}
 	);
 }

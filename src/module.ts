@@ -4,7 +4,7 @@ import { executeCommand } from './utils';
 export function ngModule() {
     return vscode.commands.registerCommand('ng-afelio.module', async (currentElement) => {
 		const name = await vscode.window.showInputBox({ prompt: 'Name' });
-		if (name === undefined) {
+		if (!name) {
 			return;
 		}
 		const options: vscode.QuickPickItem[] = [

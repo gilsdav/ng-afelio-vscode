@@ -5,7 +5,7 @@ export function ngGuard() {
     return vscode.commands.registerCommand('ng-afelio.guard', async (currentElement) => {
         // The code you place here will be executed every time your command is executed
         const name = await vscode.window.showInputBox({ prompt: 'Name' });
-        if (name === undefined) {
+        if (!name) {
             return;
         }
 

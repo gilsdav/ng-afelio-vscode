@@ -2,7 +2,7 @@
 	"name": "ng-afelio",
 	"displayName": "ng-afelio",
 	"description": "Graphical interface for ng-afelio",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"author": "David Gilson <davgilson@live.fr>",
 	"publisher": "gilsdav",
 	"homepage": "https://github.com/gilsdav/ng-afelio-vscode",
@@ -110,7 +110,6 @@
 				"command": "ng-afelio.guard",
 				"title": "Generate guard (ng-afelio)"
 			}
-			
 		],
 		"menus": {
 			"explorer/context": [
@@ -130,12 +129,12 @@
 					"group": "1_modification@3"
 				},
 				{
-					"when": "resourcePath =~ /^.*\/environments$/ || resourceDirname =~ /^.*\/environments$/",
+					"when": "resourcePath =~ /^.*/environments$/ || resourceDirname =~ /^.*/environments$/",
 					"command": "ng-afelio.check-env",
 					"group": "1_modification@4"
 				},
 				{
-					"when": "resourcePath =~ /^.*\/((locales)|(i18n))(.*.json)?$/",
+					"when": "resourcePath =~ /^.*/((locales)|(i18n))(.*.json)?$/",
 					"command": "ng-afelio.check-i18n",
 					"group": "1_modification@5"
 				},
@@ -150,7 +149,7 @@
 					"group": "1_modification@7"
 				},
 				{
-					"when": "resourcePath =~ /^.*\/mocks$/ || resourceDirname =~ /^.*\/mocks$/ && resourceFilename != mocks.ts",
+					"when": "resourcePath =~ /^.*/mocks$/ || resourceDirname =~ /^.*/mocks$/ && resourceFilename != mocks.ts",
 					"command": "ng-afelio.mock",
 					"group": "1_modification@8"
 				},
@@ -215,15 +214,20 @@
 					],
 					"default": "",
 					"description": "What to do when ng-afelio CLI is not found into your project."
+				},
+				"ng-afelio.node-path": {
+					"type": "string",
+					"default": "",
+					"description": "Set the node bin path to be used by ng-afelio."
 				}
 			}
 		},
 		"snippets": [
 			{
-			  "language": "typescript",
-			  "path": "./snippets/typescript.code-snippets"
+				"language": "typescript",
+				"path": "./snippets/typescript.code-snippets"
 			}
-		  ]
+		]
 	},
 	"extensionPack": [
 		"doggy8088.angular-extension-pack",
