@@ -1,10 +1,24 @@
 # Change Log
 
+### 0.0.3
+
+Add new features:
+
+* generate component
+* generate service
+* generate pipe
+* generate guard
+* generate directives
+
+Update features:
+
+* generate store
+* generate module
+
 ### 0.0.2
 
 Add new features:
 
-* update generate module
 * install ngxs
 * install oidc
 * install error handler
@@ -12,6 +26,10 @@ Add new features:
 * snippet barrel
 * snippet model
 * snippet cctor
+
+Update features:
+
+* generate module
 
 ## 0.0.1
 
