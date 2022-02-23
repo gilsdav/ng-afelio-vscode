@@ -71,6 +71,12 @@ No known issues
 
 ## Release Notes
 
+### 0.0.4
+
+Add new features:
+
+* setting node-path
+
 ### 0.0.3
 
 Add new features:
