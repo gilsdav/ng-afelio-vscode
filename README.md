@@ -63,6 +63,7 @@ If you have an older version you have to upgrade manually.
 This extension contributes the following settings:
 
 * `ng-afelio.when-cli-not-found`: set to `off` to disable CLI install message.
+* `ng-afelio.node-path`: set the node bin path to be used by ng-afelio. This is usefull if you are using nvm and you got an error that indicate you don't use compatible node version.
 
 ## Known Issues
 
