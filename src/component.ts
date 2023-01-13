@@ -24,7 +24,7 @@ export function ngComponent() {
                 const isSelected = quickPick.selectedItems.includes(item);
                 if (item.label === 'isContainer') {
                     if (isSelected) {
-                        return `${result} --barrelName=containers`;
+                        return `${result} --barrel-name=containers`;
                     } else {
                         return result;
                     }
