@@ -27,7 +27,7 @@ export function ngModule() {
 			quickPick.hide();
 
 			const execution = executeCommand(
-				currentElement.path,
+				currentElement.fsPath,
 				command,
 				'Module created',
 				'Can not create module here'

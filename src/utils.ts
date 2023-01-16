@@ -96,7 +96,7 @@ export async function openInUntitled(content: string, language?: string) {
 
 export async function checkIfCliIsPresent(config: vscode.WorkspaceConfiguration) {
 	if(vscode.workspace.workspaceFolders !== undefined) {
-		let wf = vscode.workspace.workspaceFolders[0].uri.path;
+		let wf = vscode.workspace.workspaceFolders[0].uri.fsPath;
 
 		let installedNgAfelioVersion: string;
 		try {

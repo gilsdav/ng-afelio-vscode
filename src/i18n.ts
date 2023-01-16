@@ -3,7 +3,7 @@ import { executeCommand } from './utils';
 
 export function i18n() {
     return vscode.commands.registerCommand('ng-afelio.i18n', async (currentElement) => {
-		let path: string = currentElement.path;
+		let path: string = currentElement.fsPath;
 		const isFile = path.match(/\/(app.module.ts)$/);
 		let appModule;
 		if (isFile) {

@@ -54,7 +54,7 @@ export function ngGuard() {
             const command = `npx ng g ng-afelio:guard ${name} --implements=${implementsType}${selectedOptions}`;
             quickPick.hide();
             const execution = executeCommand(
-                currentElement.path,
+                currentElement.fsPath,
                 command,
                 'Guard created',
                 'Can not create guard here'

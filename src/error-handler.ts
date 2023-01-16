@@ -3,7 +3,7 @@ import { executeCommand } from './utils';
 
 export function errorHander() {
     return vscode.commands.registerCommand('ng-afelio.errorHandler', async (currentElement) => {
-		let path: string = currentElement.path;
+		let path: string = currentElement.fsPath;
 		const isFile = path.match(/\/(app.module.ts)$/);
 		let appModule: string;
 		if (isFile) {

@@ -34,7 +34,7 @@ export function ngComponent() {
             const command = `npx ng g ng-afelio:component ${name}${selectedOptions}`;
             quickPick.hide();
             const execution = executeCommand(
-                currentElement.path,
+                currentElement.fsPath,
                 command,
                 'Component created',
                 'Can not create component here'

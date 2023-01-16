@@ -26,7 +26,7 @@ export function ngService() {
             const command = `npx ng g ng-afelio:service ${name}${selectedOptions}`;
             quickPick.hide();
             const execution = executeCommand(
-                currentElement.path,
+                currentElement.fsPath,
                 command,
                 'Service created',
                 'Can not create service here'

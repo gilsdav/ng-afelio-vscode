@@ -3,7 +3,7 @@ import { executeCommand } from './utils';
 
 export function mocks() {
     return vscode.commands.registerCommand('ng-afelio.mocks', async (currentElement) => {
-        let path: string = currentElement.path;
+        let path: string = currentElement.fsPath;
         const isFile = path.match(/\/(app.module.ts)$/);
         let appModule;
         if (isFile) {
@@ -26,7 +26,7 @@ export function mock() {
         if (!name) {
             return;
         }
-        let path: string = currentElement.path;
+        let path: string = currentElement.fsPath;
         const isFile = path.match(/\/(\w*.mock.ts)$/);
         let mockFile;
         if (isFile) {

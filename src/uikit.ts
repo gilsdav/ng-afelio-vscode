@@ -4,7 +4,7 @@ import { executeCommand } from './utils';
 
 export function uikit() {
     return vscode.commands.registerCommand('ng-afelio.uikit', async (currentElement) => {
-        let path: string = dirname(currentElement.path);
+        let path: string = dirname(currentElement.fsPath);
     
         const options: vscode.QuickPickItem[] = [
             { label: 'afelio' },

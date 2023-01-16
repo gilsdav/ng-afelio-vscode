@@ -26,7 +26,7 @@ export function ngDirective() {
             const command = `npx ng g ng-afelio:directive ${name}${selectedOptions}`;
             quickPick.hide();
             const execution = executeCommand(
-                currentElement.path,
+                currentElement.fsPath,
                 command,
                 'Directive created',
                 'Can not create directive here'

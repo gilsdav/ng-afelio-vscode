@@ -26,7 +26,7 @@ export function ngPipe() {
             const command = `npx ng g ng-afelio:pipe ${name}${selectedOptions}`;
             quickPick.hide();
             const execution = executeCommand(
-                currentElement.path,
+                currentElement.fsPath,
                 command,
                 'Pipe created',
                 'Can not create pipe here'

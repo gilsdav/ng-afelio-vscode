@@ -3,7 +3,7 @@ import { executeCommand } from './utils';
 
 export function stores() {
     return vscode.commands.registerCommand('ng-afelio.stores', async (currentElement) => {
-        let path: string = currentElement.path;
+        let path: string = currentElement.fsPath;
         const isFile = path.match(/\/(app.module.ts)$/);
         let appModule;
         if (isFile) {
@@ -45,7 +45,7 @@ export function store() {
             const command = `npx ng g ng-afelio:store ${name}${selectedOptions}`;
             quickPick.hide();
             const execution = executeCommand(
-                currentElement.path,
+                currentElement.fsPath,
                 command,
                 'Store created',
                 'Can not create store here'

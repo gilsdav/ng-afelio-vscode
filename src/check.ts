@@ -3,7 +3,7 @@ import { executeCommand, executeCommandAndShowResult } from './utils';
 
 export function checkEnv() {
     return vscode.commands.registerCommand('ng-afelio.check-env', async (currentElement) => {
-        let path: string = currentElement.path;
+        let path: string = currentElement.fsPath;
         const isFile = path.match(/^.*\/environments\/(.*.ts)$/);
         let mainFile;
         if (isFile) {
@@ -20,7 +20,7 @@ export function checkEnv() {
 
 export function checkI18N() {
     return vscode.commands.registerCommand('ng-afelio.check-i18n', async (currentElement) => {
-        let path: string = currentElement.path;
+        let path: string = currentElement.fsPath;
         const isFile = path.match(/\/([a-z0-9-]+.json)$/);
         let mainFile: string;
         if (isFile) {
