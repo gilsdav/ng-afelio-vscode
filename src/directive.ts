@@ -10,9 +10,10 @@ export function ngDirective() {
         }
 
         const options: vscode.QuickPickItem[] = [
+            { label: 'standalone', description: "Standalone" },
             { label: 'barrel', description: "Add into Barrel" },
         ];
-        const defaultOptions: vscode.QuickPickItem[] = options.slice();
+        const defaultOptions: vscode.QuickPickItem[] = [options[0]];
         const quickPick = vscode.window.createQuickPick();
         quickPick.canSelectMany = true;
         quickPick.items = options;

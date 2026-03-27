@@ -10,10 +10,11 @@ export function ngComponent() {
         }
 
         const options: vscode.QuickPickItem[] = [
-            { label: 'barrel', description: "Add into Barrel" },
+            { label: 'standalone', description: "Standalone" },
             { label: 'isContainer', description: "Is container" },
+            { label: 'barrel', description: "Add into Barrel" },
         ];
-        const defaultOptions: vscode.QuickPickItem[] = options.slice(0, -1);
+        const defaultOptions: vscode.QuickPickItem[] = [options[0]];
         const quickPick = vscode.window.createQuickPick();
         quickPick.canSelectMany = true;
         quickPick.items = options;
@@ -24,7 +25,7 @@ export function ngComponent() {
                 const isSelected = quickPick.selectedItems.includes(item);
                 if (item.label === 'isContainer') {
                     if (isSelected) {
-                        return `${result} --barrel-name=containers`;
+                        return `${result} --barrel-name=containers --export-default=true`;
                     } else {
                         return result;
                     }

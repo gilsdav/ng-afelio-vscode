@@ -32,15 +32,16 @@ export function mock() {
         if (isFile) {
             mockFile = isFile[1];
             path = path.replace(mockFile, '');
-        } else {
-            mockFile = await vscode.window.showInputBox({ prompt: 'File name (must end with ".mock.ts")' });
-            if (mockFile === undefined) {
-                return;
-            }
         }
+        // else {
+        //     mockFile = await vscode.window.showInputBox({ prompt: 'File name (must end with ".mock.ts")' });
+        //     if (mockFile === undefined) {
+        //         return;
+        //     }
+        // }
         const execution = executeCommand(
             path,
-            `npx ng g ng-afelio:mock ${name} ${mockFile}`,
+            `npx ng g ng-afelio:mock ${name}` + (mockFile ? ` --file=${mockFile}` : ''),
             'Mock created',
             'Can not create mock here'
         );

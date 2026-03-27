@@ -1,10 +1,11 @@
 {
 	"compilerOptions": {
+		"types": ["node", "vscode"],
 		"module": "commonjs",
-		"target": "es6",
+		"target": "esnext",
 		"outDir": "out",
 		"lib": [
-			"es6"
+			"esnext"
 		],
 		"sourceMap": true,
 		"rootDir": "src",

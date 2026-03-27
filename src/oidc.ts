@@ -4,11 +4,11 @@ import { executeCommand } from './utils';
 export function oidc() {
     return vscode.commands.registerCommand('ng-afelio.oidc', async (currentElement) => {
 		let path: string = currentElement.fsPath;
-		const isFile = path.match(/\/(app.module.ts)$/);
+		const isFile = path.match(/\/(app.module.ts)|(app.config.ts)$/);
 		let appModule;
 		if (isFile) {
 			appModule = isFile[1];
-			path = path.replace(appModule, '');
+			path = path.replace(isFile[1] ?? isFile[2], '');
 		}
 		const execution = executeCommand(
 			path,

@@ -4,11 +4,11 @@ import { executeCommand } from './utils';
 export function stores() {
     return vscode.commands.registerCommand('ng-afelio.stores', async (currentElement) => {
         let path: string = currentElement.fsPath;
-        const isFile = path.match(/\/(app.module.ts)$/);
+        const isFile = path.match(/\/(app.module.ts)|(app.config.ts)$/);
         let appModule;
         if (isFile) {
             appModule = isFile[1];
-            path = path.replace(appModule, '');
+            path = path.replace(isFile[1] ?? isFile[2], '');
         }
         const execution = executeCommand(
             path,
@@ -31,7 +31,7 @@ export function store() {
             { label: 'spec', description: "Create spec file" },
             { label: 'example', description: "Add example comments" },
         ];
-        const defaultOptions: vscode.QuickPickItem[] = options.slice(0, -1);
+        const defaultOptions: vscode.QuickPickItem[] = [];
         const quickPick = vscode.window.createQuickPick();
         quickPick.canSelectMany = true;
         quickPick.items = options;
